@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Button } from 'antd';
 
-import { registerAction } from '../../redux/actions/';
+import { registerAction } from '../../redux/actions';
+import { ROUTER } from '../../constants/routers';
 
 const RegisterPage = () => {
   const [registerForm] = Form.useForm();
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const { registerData } = useSelector((state) => state.auth);
@@ -17,10 +21,6 @@ const RegisterPage = () => {
           name: 'email',
           errors: registerData.errors,
         },
-        // {
-        //   name: 'name',
-        //   errors: registerData.errors,
-        // },
       ]);
     }
   }, [registerData.errors]);
@@ -28,10 +28,15 @@ const RegisterPage = () => {
   const handleRegister = (values) => {
     dispatch(
       registerAction({
-        email: values.email,
-        name: values.name,
-        password: values.password,
-        role: 'user',
+        data: {
+          email: values.email,
+          name: values.name,
+          password: values.password,
+          role: 'user',
+        },
+        callback: {
+          goToLogin: () => navigate(ROUTER.LOGIN),
+        },
       })
     );
   };

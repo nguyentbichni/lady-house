@@ -11,24 +11,45 @@ const initialState = {
     loading: false,
     errors: null,
   },
+  loginData: {
+    loading: false,
+    errors: null,
+  },
 };
 
 const authReducer = createReducer(initialState, {
   [REQUEST(AUTH_ACTION.LOGIN)]: (state) => {
     return {
       ...state,
-      userInfo: {
-        ...state.userInfo,
+      loginData: {
         loading: true,
         errors: null,
       },
     };
   },
   [SUCCESS(AUTH_ACTION.LOGIN)]: (state, action) => {
-    return state;
+    const { data } = action.payload;
+    return {
+      ...state,
+      loginData: {
+        loading: false,
+        errors: null,
+      },
+      userInfo: {
+        ...state.userInfo,
+        data,
+      },
+    };
   },
   [FAIL(AUTH_ACTION.LOGIN)]: (state, action) => {
-    return state;
+    const { errors } = action.payload;
+    return {
+      ...state,
+      loginData: {
+        loading: false,
+        errors,
+      },
+    };
   },
 
   [REQUEST(AUTH_ACTION.REGISTER)]: (state) => {
@@ -41,7 +62,6 @@ const authReducer = createReducer(initialState, {
     };
   },
   [SUCCESS(AUTH_ACTION.REGISTER)]: (state, action) => {
-    console.log('🚀 ~ file: auth.reducer.js ~ line 44 ~ [SUCCESS ~ action', action);
     return {
       ...state,
       registerData: {
@@ -51,11 +71,43 @@ const authReducer = createReducer(initialState, {
     };
   },
   [FAIL(AUTH_ACTION.REGISTER)]: (state, action) => {
-    console.log('🚀 ~ file: auth.reducer.js ~ line 48 ~ [FAIL ~ action', action);
     const { errors } = action.payload;
     return {
       ...state,
       registerData: {
+        loading: false,
+        errors,
+      },
+    };
+  },
+
+  [REQUEST(AUTH_ACTION.GET_USER_INFO)]: (state) => {
+    return {
+      ...state,
+      userInfo: {
+        ...state.userInfo,
+        loading: true,
+        errors: null,
+      },
+    };
+  },
+  [SUCCESS(AUTH_ACTION.GET_USER_INFO)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      userInfo: {
+        data,
+        loading: false,
+        errors: null,
+      },
+    };
+  },
+  [FAIL(AUTH_ACTION.GET_USER_INFO)]: (state, action) => {
+    const { errors } = action.payload;
+    return {
+      ...state,
+      userInfo: {
+        ...state.userInfo,
         loading: false,
         errors,
       },

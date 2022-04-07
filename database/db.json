@@ -8,6 +8,76 @@
       "createdAt": 1649255177929,
       "updatedAt": 1649255177929,
       "id": 1
+    },
+    {
+      "email": "bichnanguyen1999.nn@gmail.com",
+      "password": "$2a$10$q7dTmnnM0hCczLC7nqlgAOgqPpGN7PJlKzAGDj/q7PK.hjNbbw68O",
+      "name": "Nguyen",
+      "role": "user",
+      "createdAt": 1649342176083,
+      "updatedAt": 1649342176083,
+      "id": 2
+    },
+    {
+      "email": "bichninguyen999.nn@gmail.com",
+      "password": "$2a$10$nyG39463StHbX.shVNu1XOMEvMEdZ9mA9GAxAw4qjYJ1dAncSH6yW",
+      "name": "Nguyen",
+      "role": "user",
+      "createdAt": 1649342462719,
+      "updatedAt": 1649342462719,
+      "id": 3
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Iphone X 1",
+      "price": "1000000",
+      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "description": "Iphone X",
+      "createdAt": 1649255177929,
+      "updatedAt": 1649255177929,
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "name": "Iphone X 2",
+      "price": "1000000",
+      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "description": "Iphone X",
+      "createdAt": 1649255177929,
+      "updatedAt": 1649255177929,
+      "categoryId": 1
+    },
+    {
+      "id": 3,
+      "name": "Iphone X 3",
+      "price": "1000000",
+      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "description": "Iphone X",
+      "createdAt": 1649255177929,
+      "updatedAt": 1649255177929,
+      "categoryId": 1
+    },
+    {
+      "id": 4,
+      "name": "Iphone X 4",
+      "price": "1000000",
+      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "description": "Iphone X",
+      "createdAt": 1649255177929,
+      "updatedAt": 1649255177929,
+      "categoryId": 1
+    },
+    {
+      "id": 5,
+      "name": "Iphone X 5",
+      "price": "1000000",
+      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "description": "Iphone X",
+      "createdAt": 1649255177929,
+      "updatedAt": 1649255177929,
+      "categoryId": 1
     }
   ]
 }

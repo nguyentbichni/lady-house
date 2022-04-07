@@ -1,17 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox } from 'antd';
 
+import { loginAction } from '../../redux/actions/';
+
 const LoginPage = () => {
+  const [loginForm] = Form.useForm();
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+  const { loginData } = useSelector((state) => state.auth);
+  console.log('🚀 ~ file: index.jsx ~ line 12 ~ LoginPage ~ loginData', loginData);
+
+  useEffect(() => {
+    if (loginData.errors?.length) {
+      loginForm.setFields([
+        {
+          name: 'email',
+          errors: [' '],
+        },
+        {
+          name: 'password',
+          errors: ['Email or password is incorrect'],
+        },
+      ]);
+    }
+  }, [loginData.errors]);
+
+  const handleLogin = (values) => {
+    dispatch(
+      loginAction({
+        data: {
+          email: values.email,
+          password: values.password,
+        },
+        callback: {
+          goToHome: () => navigate('/'),
+        },
+      })
+    );
+  };
+
   return (
     <Form
+      form={loginForm}
       name="basic"
       layout="vertical"
       initialValues={{
         remember: true,
       }}
-      onFinish={(values) => {
-        console.log('🚀 ~ file: index.jsx ~ line 13 ~ LoginPage ~ values', values);
-      }}
+      onFinish={(values) => handleLogin(values)}
       autoComplete="off"
     >
       <Form.Item
@@ -61,7 +101,7 @@ const LoginPage = () => {
           span: 16,
         }}
       >
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={loginData.loading}>
           Submit
         </Button>
       </Form.Item>
