@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "email": "bichninguyen1999.nn@gmail.com",
+      "password": "$2a$10$smOZPi0ypOUEt/rK3r3nxuCv7hWk6PT4iZOAkORKs4GkshKwY/ghm",
+      "name": "Nguyen",
+      "role": "user",
+      "createdAt": 1649255177929,
+      "updatedAt": 1649255177929,
+      "id": 1
+    }
+  ]
+}
