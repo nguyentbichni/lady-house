@@ -5,7 +5,12 @@ import { REQUEST, SUCCESS, FAIL, PRODUCT_ACTION } from '../constants';
 
 function* getProductListSaga(action) {
   try {
-    const result = yield axios.get(`http://localhost:4000/products`);
+    const { categoryIds } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/products`, {
+      params: {
+        categoryId: categoryIds,
+      },
+    });
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST),
       payload: {
