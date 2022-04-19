@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductListAction, getCategoryListAction } from '../../../redux/actions';
 
 const ProductListPage = () => {
-  const [filterParams, setFilterParams] = useState({ categoryIds: [], keyword: '' });
+  const [filterParams, setFilterParams] = useState({
+    categoryIds: [],
+    keyword: '',
+    price: [0, 50000000],
+    order: undefined,
+  });
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
@@ -15,6 +20,7 @@ const ProductListPage = () => {
   useEffect(() => {
     dispatch(
       getProductListAction({
+        ...filterParams,
         page: 1,
         limit: 4,
       })
@@ -26,6 +32,7 @@ const ProductListPage = () => {
     setFilterParams({ ...filterParams, categoryIds: values });
     dispatch(
       getProductListAction({
+        ...filterParams,
         categoryIds: values,
         page: 1,
         limit: 4,
@@ -33,11 +40,36 @@ const ProductListPage = () => {
     );
   }
 
-  function handleFilterKeyword(values) {
-    setFilterParams({ ...filterParams, keyword: values });
+  function handleFilterKeyword(e) {
+    setFilterParams({ ...filterParams, keyword: e.target.value });
     dispatch(
       getProductListAction({
-        keyword: values,
+        ...filterParams,
+        keyword: e.target.value,
+        page: 1,
+        limit: 4,
+      })
+    );
+  }
+
+  function handleFilterPrice(value) {
+    setFilterParams({ ...filterParams, price: value });
+    dispatch(
+      getProductListAction({
+        ...filterParams,
+        price: value,
+        page: 1,
+        limit: 4,
+      })
+    );
+  }
+
+  function handleFilterOrder(value) {
+    setFilterParams({ ...filterParams, order: value });
+    dispatch(
+      getProductListAction({
+        ...filterParams,
+        order: value,
         page: 1,
         limit: 4,
       })
@@ -47,7 +79,7 @@ const ProductListPage = () => {
   function handleShowMore() {
     dispatch(
       getProductListAction({
-        categoryIds: filterParams.categoryIds,
+        ...filterParams,
         page: productList.meta.page + 1,
         limit: 4,
         more: true,
@@ -81,7 +113,15 @@ const ProductListPage = () => {
             <Checkbox.Group options={categoryOptions} onChange={(values) => handleFilterCategory(values)} />
           </Card>
           <Card title="Khoang gia">
-            <Slider range defaultValue={[20, 50]} />
+            <Slider
+              range
+              onChange={(value) => handleFilterPrice(value)}
+              min={0}
+              max={50000000}
+              step={1000000}
+              value={filterParams.price}
+              tipFormatter={(value) => value.toLocaleString()}
+            />
           </Card>
         </Col>
         <Col span={18}>
@@ -89,17 +129,20 @@ const ProductListPage = () => {
             <Col span={16}>
               <Input.Search
                 placeholder="input search text"
-                onChange={(value) => handleFilterKeyword(value)}
+                onChange={(e) => handleFilterKeyword(e)}
                 style={{ width: '100%' }}
               />
             </Col>
             <Col span={8}>
               <Select
                 placeholder="Select a option and change input text above"
-                // onChange={this.onGenderChange}
+                onChange={(value) => handleFilterOrder(value)}
                 allowClear
                 style={{ width: '100%' }}
-              ></Select>
+              >
+                <Select.Option value="asc">Tang dan</Select.Option>
+                <Select.Option value="desc">Giam dan</Select.Option>
+              </Select>
             </Col>
           </Row>
           <Row gutter={[16, 16]}>{renderProductList()}</Row>

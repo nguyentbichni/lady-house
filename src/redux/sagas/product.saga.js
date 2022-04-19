@@ -5,10 +5,17 @@ import { REQUEST, SUCCESS, FAIL, PRODUCT_ACTION } from '../constants';
 
 function* getProductListSaga(action) {
   try {
-    const { categoryIds, page, limit, more } = action.payload;
+    const { categoryIds, page, limit, more, keyword, price, order } = action.payload;
     const result = yield axios.get(`http://localhost:4000/products`, {
       params: {
         categoryId: categoryIds,
+        q: keyword,
+        price_gte: price[0],
+        price_lte: price[1],
+        ...(order && {
+          _sort: 'price',
+          _order: order,
+        }),
         _page: page,
         _limit: limit,
       },
