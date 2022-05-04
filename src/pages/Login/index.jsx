@@ -12,7 +12,6 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
   const { loginData } = useSelector((state) => state.auth);
-  console.log('🚀 ~ file: index.jsx ~ line 12 ~ LoginPage ~ loginData', loginData);
 
   useEffect(() => {
     if (loginData.errors?.length) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Checkbox, Input, Select, Slider, Button } from 'antd';
+import { Row, Col, Card, Checkbox, Input, Select, Slider, Button, Tag, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getProductListAction, getCategoryListAction } from '../../../redux/actions';
@@ -11,11 +11,10 @@ const ProductListPage = () => {
     price: [0, 50000000],
     order: undefined,
   });
+  console.log('🚀 ~ file: index.jsx ~ line 9 ~ ProductListPage ~ filterParams', filterParams);
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
-
-  console.log('🚀 ~ file: index.jsx ~ line 11 ~ ProductListPage ~ categoryList', categoryList);
 
   useEffect(() => {
     dispatch(
@@ -87,9 +86,57 @@ const ProductListPage = () => {
     );
   }
 
+  function handleCloseCategoryTag(categoryId) {
+    const newCategoryIds = filterParams.categoryIds.filter((item) => item !== categoryId);
+    setFilterParams({ ...filterParams, categoryIds: newCategoryIds });
+    dispatch(
+      getProductListAction({
+        ...filterParams,
+        categoryIds: newCategoryIds,
+        page: 1,
+        limit: 4,
+      })
+    );
+  }
+
+  function handleCloseKeywordTag() {
+    setFilterParams({ ...filterParams, keyword: '' });
+    dispatch(
+      getProductListAction({
+        ...filterParams,
+        keyword: '',
+        page: 1,
+        limit: 4,
+      })
+    );
+  }
+
+  function handleCloseOrderTag() {
+    setFilterParams({ ...filterParams, order: undefined });
+    dispatch(
+      getProductListAction({
+        ...filterParams,
+        order: undefined,
+        page: 1,
+        limit: 4,
+      })
+    );
+  }
+
   const categoryOptions = categoryList.data.map((item) => {
     return { label: item.name, value: item.id };
   });
+
+  const renderCategoryTags = () => {
+    return filterParams.categoryIds.map((categoryId) => {
+      const categoryData = categoryList.data.find((item) => item.id === categoryId);
+      return (
+        <Tag key={`category-${categoryId}`} closable onClose={() => handleCloseCategoryTag(categoryId)}>
+          {categoryData.name}
+        </Tag>
+      );
+    });
+  };
 
   const renderProductList = () => {
     if (productList.loading) return <div>Loading...</div>;
@@ -110,7 +157,11 @@ const ProductListPage = () => {
       <Row gutter={[16, 16]}>
         <Col span={6}>
           <Card title="Danh muc" style={{ marginBottom: 16 }}>
-            <Checkbox.Group options={categoryOptions} onChange={(values) => handleFilterCategory(values)} />
+            <Checkbox.Group
+              options={categoryOptions}
+              onChange={(values) => handleFilterCategory(values)}
+              value={filterParams.categoryIds}
+            />
           </Card>
           <Card title="Khoang gia">
             <Slider
@@ -131,10 +182,12 @@ const ProductListPage = () => {
                 placeholder="input search text"
                 onChange={(e) => handleFilterKeyword(e)}
                 style={{ width: '100%' }}
+                value={filterParams.keyword}
               />
             </Col>
             <Col span={8}>
               <Select
+                value={filterParams.order}
                 placeholder="Select a option and change input text above"
                 onChange={(value) => handleFilterOrder(value)}
                 allowClear
@@ -145,6 +198,19 @@ const ProductListPage = () => {
               </Select>
             </Col>
           </Row>
+          <Space style={{ marginBottom: 16 }} size={8}>
+            {renderCategoryTags()}
+            {!!filterParams.keyword && (
+              <Tag closable onClose={() => handleCloseKeywordTag()}>
+                {`Từ khoá: ${filterParams.keyword}`}
+              </Tag>
+            )}
+            {filterParams.order && (
+              <Tag closable onClose={() => handleCloseOrderTag()}>
+                {`Sắp xếp: ${filterParams.order === 'asc' ? 'Tăng' : 'Giảm'}`}
+              </Tag>
+            )}
+          </Space>
           <Row gutter={[16, 16]}>{renderProductList()}</Row>
           {productList.meta.total !== productList.data.length && (
             <Row justify="center">

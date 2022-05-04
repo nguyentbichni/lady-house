@@ -16,10 +16,8 @@ function App() {
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
-    console.log('🚀 ~ file: App.js ~ line 15 ~ useEffect ~ accessToken', accessToken);
     if (accessToken) {
       const decodedUserData = jwtDecode(accessToken);
-      console.log('🚀 ~ file: App.js ~ line 18 ~ useEffect ~ decodedUserData', decodedUserData);
       dispatch(getUserInfoAction({ id: decodedUserData.sub }));
     }
   }, []);

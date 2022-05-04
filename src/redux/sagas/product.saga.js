@@ -20,7 +20,6 @@ function* getProductListSaga(action) {
         _limit: limit,
       },
     });
-    console.log('🚀 ~ file: product.saga.js ~ line 16 ~ function*getProductListSaga ~ result', result);
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST),
       payload: {
