@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Checkbox, Input, Select, Slider, Button, Tag, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, generatePath } from 'react-router-dom';
 
+import { ROUTER } from '../../../constants/routers';
 import { getProductListAction, getCategoryListAction } from '../../../redux/actions';
 
 const ProductListPage = () => {
@@ -15,6 +17,8 @@ const ProductListPage = () => {
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(
@@ -86,6 +90,17 @@ const ProductListPage = () => {
     );
   }
 
+  const renderCategoryTags = () => {
+    return filterParams.categoryIds.map((categoryId) => {
+      const categoryData = categoryList.data.find((item) => item.id === categoryId);
+      return (
+        <Tag key={`category-${categoryId}`} closable onClose={() => handleCloseCategoryTag(categoryId)}>
+          {categoryData.name}
+        </Tag>
+      );
+    });
+  };
+
   function handleCloseCategoryTag(categoryId) {
     const newCategoryIds = filterParams.categoryIds.filter((item) => item !== categoryId);
     setFilterParams({ ...filterParams, categoryIds: newCategoryIds });
@@ -123,27 +138,34 @@ const ProductListPage = () => {
     );
   }
 
+  function handleClosePriceTag() {
+    setFilterParams({ ...filterParams, price: [0, 50000000] });
+    dispatch(
+      getProductListAction({
+        ...filterParams,
+        price: [0, 50000000],
+        page: 1,
+        limit: 4,
+      })
+    );
+  }
+
   const categoryOptions = categoryList.data.map((item) => {
     return { label: item.name, value: item.id };
   });
-
-  const renderCategoryTags = () => {
-    return filterParams.categoryIds.map((categoryId) => {
-      const categoryData = categoryList.data.find((item) => item.id === categoryId);
-      return (
-        <Tag key={`category-${categoryId}`} closable onClose={() => handleCloseCategoryTag(categoryId)}>
-          {categoryData.name}
-        </Tag>
-      );
-    });
-  };
 
   const renderProductList = () => {
     if (productList.loading) return <div>Loading...</div>;
     return productList.data.map((productItem) => {
       return (
         <Col key={productItem.id} span={6}>
-          <Card size="small" title={productItem.name}>
+          <Card
+            size="small"
+            title={productItem.name}
+            onClick={() => {
+              navigate(generatePath(ROUTER.USER.PRODUCT_DETAIL, { id: productItem.id }));
+            }}
+          >
             <p>{productItem.price}</p>
           </Card>
         </Col>
@@ -208,6 +230,11 @@ const ProductListPage = () => {
             {filterParams.order && (
               <Tag closable onClose={() => handleCloseOrderTag()}>
                 {`Sắp xếp: ${filterParams.order === 'asc' ? 'Tăng' : 'Giảm'}`}
+              </Tag>
+            )}
+            {filterParams.price && (
+              <Tag closable onClose={() => handleClosePriceTag()}>
+                {`Khoảng giá: ${filterParams.price[0].toLocaleString()} - ${filterParams.price[1].toLocaleString()}`}
               </Tag>
             )}
           </Space>

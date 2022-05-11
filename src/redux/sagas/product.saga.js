@@ -41,6 +41,27 @@ function* getProductListSaga(action) {
   }
 }
 
+function* getProductDetailSaga(action) {
+  try {
+    const { id } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/products/${id}`);
+    yield put({
+      type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (error) {
+    yield put({
+      type: FAIL(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+      payload: {
+        errors: ['Lỗi không xác định'],
+      },
+    });
+  }
+}
+
 export default function* productSaga() {
   yield takeEvery(REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST), getProductListSaga);
+  yield takeEvery(REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL), getProductDetailSaga);
 }

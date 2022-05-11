@@ -27,6 +27,7 @@ function App() {
       <Route element={<PublicLayout />}>
         <Route path={ROUTER.USER.HOME} element={<P.HomePage />} />
         <Route path={ROUTER.USER.PRODUCT_LIST} element={<P.ProductListPage />} />
+        <Route path={ROUTER.USER.PRODUCT_DETAIL} element={<P.ProductDetailPage />} />
       </Route>
       <Route element={<LoginLayout />}>
         <Route path={ROUTER.LOGIN} element={<P.LoginPage />} />
