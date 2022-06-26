@@ -43,7 +43,7 @@
       "id": 1,
       "name": "Iphone X 1",
       "price": "1000000",
-      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "image": "https://via.placeholder.com/300x200",
       "description": "Iphone X",
       "createdAt": 1649255177929,
       "updatedAt": 1649255177929,
@@ -53,7 +53,7 @@
       "id": 2,
       "name": "Iphone X 2",
       "price": "1000000",
-      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "image": "https://via.placeholder.com/300x200",
       "description": "Iphone X",
       "createdAt": 1649255177929,
       "updatedAt": 1649255177929,
@@ -63,7 +63,7 @@
       "id": 3,
       "name": "Iphone X 3",
       "price": "1000000",
-      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "image": "https://via.placeholder.com/300x200",
       "description": "Iphone X",
       "createdAt": 1649255177929,
       "updatedAt": 1649255177929,
@@ -73,7 +73,7 @@
       "id": 4,
       "name": "Iphone X 4",
       "price": "1000000",
-      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "image": "https://via.placeholder.com/300x200",
       "description": "Iphone X",
       "createdAt": 1649255177929,
       "updatedAt": 1649255177929,
@@ -83,7 +83,7 @@
       "id": 5,
       "name": "Iphone X 5",
       "price": "1000000",
-      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "image": "https://via.placeholder.com/300x200",
       "description": "Iphone X",
       "createdAt": 1649255177929,
       "updatedAt": 1649255177929,
@@ -93,7 +93,7 @@
       "id": 6,
       "name": "Samsung S6",
       "price": "1000000",
-      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "image": "https://via.placeholder.com/300x200",
       "description": "Iphone X",
       "createdAt": 1649255177929,
       "updatedAt": 1649255177929,
@@ -103,11 +103,40 @@
       "id": 7,
       "name": "Samsung S7",
       "price": "1000000",
-      "image": "https://cdn.tgdd.vn/Products/Images/42/114014/iphone-x-64gb-1-400x460.png",
+      "image": "https://via.placeholder.com/300x200",
       "description": "Iphone X",
       "createdAt": 1649255177929,
       "updatedAt": 1649255177929,
       "categoryId": 2
+    }
+  ],
+  "comments": [
+    {
+      "productId": 1,
+      "userId": 1,
+      "comment": "ghbdfgh",
+      "rate": "fhgbdfg",
+      "createdAt": 1652588912941,
+      "updatedAt": 1652588912941,
+      "id": 2
+    },
+    {
+      "productId": 1,
+      "userId": 1,
+      "comment": "abc",
+      "rate": "edf",
+      "createdAt": 1652590231890,
+      "updatedAt": 1652590231890,
+      "id": 5
+    },
+    {
+      "productId": 1,
+      "userId": 2,
+      "comment": "0849954060",
+      "rate": "0849954060",
+      "createdAt": 1652591000976,
+      "updatedAt": 1652591000976,
+      "id": 6
     }
   ]
 }
