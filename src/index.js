@@ -7,7 +7,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
-import 'antd/dist/antd.css';
 
 const root = ReactDOMClient.createRoot(document.getElementById('root'));
 

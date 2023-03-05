@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { PRODUCT_ACTION, REQUEST, SUCCESS, FAIL } from '../constants';
+import { PRODUCT_ACTION, FAVORITE_ACTION, REQUEST, SUCCESS, FAIL } from '../constants';
 
 const initialState = {
   productList: {
@@ -10,6 +10,14 @@ const initialState = {
   },
   productDetail: {
     data: {},
+    loading: false,
+    errors: null,
+  },
+  createProductData: {
+    loading: false,
+    errors: null,
+  },
+  updateProductData: {
     loading: false,
     errors: null,
   },
@@ -26,13 +34,13 @@ const productReducer = createReducer(initialState, {
     };
   },
   [SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
-    const { data, meta, more } = action.payload;
+    const { data, meta, isShowMore } = action.payload;
     return {
       ...state,
       productList: {
-        data: more ? [...state.productList.data, ...data] : data,
+        data: isShowMore ? [...state.productList.data, ...data] : data,
         meta,
-        loading: false,
+        loading: true,
         errors: null,
       },
     };
@@ -41,8 +49,8 @@ const productReducer = createReducer(initialState, {
     const { errors } = action.payload;
     return {
       ...state,
-      productDetail: {
-        ...state.productDetail,
+      productList: {
+        ...state.productList,
         loading: false,
         errors,
       },
@@ -64,8 +72,9 @@ const productReducer = createReducer(initialState, {
     return {
       ...state,
       productDetail: {
-        data: data,
-        loading: false,
+        ...state.productDetail,
+        data,
+        loading: true,
         errors: null,
       },
     };
@@ -78,6 +87,98 @@ const productReducer = createReducer(initialState, {
         ...state.productDetail,
         loading: false,
         errors,
+      },
+    };
+  },
+
+  [REQUEST(PRODUCT_ACTION.CREATE_PRODUCT)]: (state) => {
+    return {
+      ...state,
+      createProductData: {
+        loading: true,
+        errors: null,
+      },
+    };
+  },
+  [SUCCESS(PRODUCT_ACTION.CREATE_PRODUCT)]: (state, action) => {
+    return {
+      ...state,
+      createProductData: {
+        ...state.createProductData,
+        loading: false,
+      },
+    };
+  },
+  [FAIL(PRODUCT_ACTION.CREATE_PRODUCT)]: (state, action) => {
+    const { errors } = action.payload;
+    return {
+      ...state,
+      createProductData: {
+        loading: false,
+        errors,
+      },
+    };
+  },
+  // UPDATE_PRODUCT
+  [REQUEST(PRODUCT_ACTION.UPDATE_PRODUCT)]: (state) => {
+    return {
+      ...state,
+      updateProductData: {
+        loading: true,
+        errors: null,
+      },
+    };
+  },
+  [SUCCESS(PRODUCT_ACTION.UPDATE_PRODUCT)]: (state, action) => {
+    return {
+      ...state,
+      updateProductData: {
+        ...state.updateProductData,
+        loading: false,
+      },
+    };
+  },
+  [FAIL(PRODUCT_ACTION.UPDATE_PRODUCT)]: (state, action) => {
+    const { errors } = action.payload;
+    return {
+      ...state,
+      updateProductData: {
+        loading: false,
+        errors,
+      },
+    };
+  },
+  // FAVORITE_PRODUCT
+  [SUCCESS(FAVORITE_ACTION.FAVORITE_PRODUCT)]: (state, action) => {
+    const { data } = action.payload;
+    // const newFavorites = [...state.productDetail.data.favorites];
+    // newFavorites.push(data);
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
+        data: {
+          ...state.productDetail.data,
+          // favorites: newFavorites,
+          favorites: [...state.productDetail.data.favorites, data],
+        },
+      },
+    };
+  },
+  // UNFAVORITE_PRODUCT
+  [SUCCESS(FAVORITE_ACTION.UNFAVORITE_PRODUCT)]: (state, action) => {
+    const { id } = action.payload;
+    console.log('🚀 ~ file: product.reducer.js:171 ~ [SUCCESS ~ id', id);
+    const newFavorites = state.productDetail.data.favorites?.filter((item) => item.id !== id);
+    console.log('🚀 ~ file: product.reducer.js:172 ~ [SUCCESS ~ newFavorites', newFavorites);
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
+        data: {
+          ...state.productDetail.data,
+          favorites: newFavorites,
+        },
       },
     };
   },

@@ -4,7 +4,7 @@ import { AUTH_ACTION, REQUEST, SUCCESS, FAIL } from '../constants';
 const initialState = {
   userInfo: {
     data: {},
-    loading: false,
+    loading: true,
     errors: null,
   },
   registerData: {
@@ -32,12 +32,13 @@ const authReducer = createReducer(initialState, {
     return {
       ...state,
       loginData: {
+        ...state.loginData,
         loading: false,
-        errors: null,
       },
       userInfo: {
         ...state.userInfo,
         data,
+        loading: false,
       },
     };
   },
@@ -65,8 +66,8 @@ const authReducer = createReducer(initialState, {
     return {
       ...state,
       registerData: {
+        ...state.registerData,
         loading: false,
-        errors: null,
       },
     };
   },
@@ -96,9 +97,9 @@ const authReducer = createReducer(initialState, {
     return {
       ...state,
       userInfo: {
+        ...state.userInfo,
         data,
         loading: false,
-        errors: null,
       },
     };
   },
@@ -110,6 +111,17 @@ const authReducer = createReducer(initialState, {
         ...state.userInfo,
         loading: false,
         errors,
+      },
+    };
+  },
+  [REQUEST(AUTH_ACTION.LOGOUT)]: (state) => {
+    localStorage.removeItem('accessToken');
+    return {
+      ...state,
+      userInfo: {
+        data: {},
+        loading: false,
+        errors: null,
       },
     };
   },

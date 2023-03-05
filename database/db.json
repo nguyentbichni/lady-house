@@ -6,8 +6,9 @@
       "name": "Nguyen",
       "role": "user",
       "createdAt": 1649255177929,
-      "updatedAt": 1649255177929,
-      "id": 1
+      "updatedAt": 1673450880672,
+      "id": 1,
+      "isDeleted": true
     },
     {
       "email": "bichnanguyen1999.nn@gmail.com",
@@ -15,8 +16,9 @@
       "name": "Nguyen",
       "role": "user",
       "createdAt": 1649342176083,
-      "updatedAt": 1649342176083,
-      "id": 2
+      "updatedAt": 1674883341615,
+      "id": 2,
+      "isDeleted": true
     },
     {
       "email": "bichninguyen999.nn@gmail.com",
@@ -25,118 +27,413 @@
       "role": "user",
       "createdAt": 1649342462719,
       "updatedAt": 1649342462719,
-      "id": 3
+      "id": 3,
+      "isDeleted": false
+    },
+    {
+      "email": "ni@gmail.com",
+      "password": "$2a$10$dEkjIOKykCIDPMzChM0QA.8ZVPZU74ZMpeHTEa21734/dIq2tB0AO",
+      "fullName": "Ni Nguyen",
+      "role": "user",
+      "createdAt": 1669218254289,
+      "updatedAt": 1673279062002,
+      "id": 4,
+      "isDeleted": true
+    },
+    {
+      "email": "nguyentbichni@dtu.edu.vn",
+      "password": "$2a$10$QlytvS6QVgTFtIjptTVcXOY2in8vO2KdQi0OahTelfK3kwDmtF5eu",
+      "name": "Nguyen Thi Bich Ni",
+      "role": "admin",
+      "createdAt": 1670732897552,
+      "updatedAt": 1670732897552,
+      "id": 5,
+      "isDeleted": false
+    },
+    {
+      "email": "bichninguyen@gmail.com",
+      "password": "$2a$10$cRXLEeRzgidcCRJ1MiDwaeaBQ6Gg/yQldlIeyK/M2HCTmCOH6KtrS",
+      "name": "Nguyen Thi Bich Ni",
+      "role": "user",
+      "createdAt": 1671117534139,
+      "updatedAt": 1671117534140,
+      "id": 6,
+      "isDeleted": false
     }
   ],
   "categories": [
     {
-      "id": 1,
-      "name": "Apple"
+      "id": 3,
+      "name": "3W Clinic",
+      "isDeleted": true,
+      "updatedAt": 1671244904199
     },
     {
-      "id": 2,
-      "name": "Samsung"
+      "name": "Đông Anh",
+      "createdAt": 1671246526087,
+      "updatedAt": 1671248992683,
+      "isDeleted": false,
+      "id": 4
+    },
+    {
+      "name": "LACO",
+      "createdAt": 1671851921272,
+      "updatedAt": 1671851921272,
+      "isDeleted": false,
+      "id": 5
+    },
+    {
+      "name": "Nanowhite",
+      "createdAt": 1671851938260,
+      "updatedAt": 1671851938260,
+      "isDeleted": false,
+      "id": 6
+    },
+    {
+      "name": "LANEIGE",
+      "createdAt": 1671851954908,
+      "updatedAt": 1671851954908,
+      "isDeleted": false,
+      "id": 7
+    },
+    {
+      "name": "YUKINA",
+      "createdAt": 1671851964994,
+      "updatedAt": 1671851964994,
+      "isDeleted": false,
+      "id": 8
+    },
+    {
+      "name": "BioAQUA",
+      "createdAt": 1671851977822,
+      "updatedAt": 1671851977822,
+      "isDeleted": false,
+      "id": 9
+    },
+    {
+      "name": "Simple",
+      "createdAt": 1671851990053,
+      "updatedAt": 1671851990053,
+      "isDeleted": false,
+      "id": 10
+    },
+    {
+      "name": "AHC",
+      "createdAt": 1671852003375,
+      "updatedAt": 1671852003375,
+      "isDeleted": false,
+      "id": 11
     }
   ],
   "products": [
     {
-      "id": 1,
-      "name": "Iphone X 1",
-      "price": "1000000",
-      "image": "https://via.placeholder.com/300x200",
-      "description": "Iphone X",
-      "createdAt": 1649255177929,
-      "updatedAt": 1649255177929,
-      "categoryId": 1
+      "name": "Iphone X 3 Pro",
+      "categoryId": 3,
+      "minPrice": 123,
+      "maxPrice": 123,
+      "createdAt": 1671244520731,
+      "updatedAt": 1671852061603,
+      "isDeleted": true,
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "Iphone X 2",
-      "price": "1000000",
-      "image": "https://via.placeholder.com/300x200",
-      "description": "Iphone X",
-      "createdAt": 1649255177929,
-      "updatedAt": 1649255177929,
-      "categoryId": 1
-    },
-    {
-      "id": 3,
-      "name": "Iphone X 3",
-      "price": "1000000",
-      "image": "https://via.placeholder.com/300x200",
-      "description": "Iphone X",
-      "createdAt": 1649255177929,
-      "updatedAt": 1649255177929,
-      "categoryId": 1
-    },
-    {
-      "id": 4,
-      "name": "Iphone X 4",
-      "price": "1000000",
-      "image": "https://via.placeholder.com/300x200",
-      "description": "Iphone X",
-      "createdAt": 1649255177929,
-      "updatedAt": 1649255177929,
-      "categoryId": 1
-    },
-    {
-      "id": 5,
-      "name": "Iphone X 5",
-      "price": "1000000",
-      "image": "https://via.placeholder.com/300x200",
-      "description": "Iphone X",
-      "createdAt": 1649255177929,
-      "updatedAt": 1649255177929,
-      "categoryId": 1
-    },
-    {
-      "id": 6,
-      "name": "Samsung S6",
-      "price": "1000000",
-      "image": "https://via.placeholder.com/300x200",
-      "description": "Iphone X",
-      "createdAt": 1649255177929,
-      "updatedAt": 1649255177929,
-      "categoryId": 2
-    },
-    {
-      "id": 7,
-      "name": "Samsung S7",
-      "price": "1000000",
-      "image": "https://via.placeholder.com/300x200",
-      "description": "Iphone X",
-      "createdAt": 1649255177929,
-      "updatedAt": 1649255177929,
-      "categoryId": 2
-    }
-  ],
-  "comments": [
-    {
-      "productId": 1,
-      "userId": 1,
-      "comment": "ghbdfgh",
-      "rate": "fhgbdfg",
-      "createdAt": 1652588912941,
-      "updatedAt": 1652588912941,
+      "name": "Xiaomi 1",
+      "categoryId": 4,
+      "minPrice": 1,
+      "maxPrice": 1,
+      "createdAt": 1671246568566,
+      "updatedAt": 1671852063431,
+      "isDeleted": true,
       "id": 2
     },
     {
-      "productId": 1,
-      "userId": 1,
-      "comment": "abc",
-      "rate": "edf",
-      "createdAt": 1652590231890,
-      "updatedAt": 1652590231890,
+      "name": "Kem Body trắng da Collagen X3 Luxury Mỹ phẩm Đông Anh",
+      "categoryId": 4,
+      "minPrice": 115,
+      "maxPrice": 120,
+      "createdAt": 1671852077794,
+      "updatedAt": 1671852077794,
+      "isDeleted": false,
+      "id": 3
+    },
+    {
+      "name": "Combo Kem Face Collagen X3 Luxury",
+      "categoryId": 4,
+      "minPrice": 79,
+      "maxPrice": 123,
+      "createdAt": 1671852113414,
+      "updatedAt": 1671852113414,
+      "isDeleted": false,
+      "id": 4
+    },
+    {
+      "name": "Kích trắng Collagen X3",
+      "categoryId": 4,
+      "minPrice": 39000,
+      "maxPrice": 39000,
+      "createdAt": 1671852136858,
+      "updatedAt": 1671852136858,
+      "isDeleted": false,
       "id": 5
     },
     {
-      "productId": 1,
-      "userId": 2,
-      "comment": "0849954060",
-      "rate": "0849954060",
-      "createdAt": 1652591000976,
-      "updatedAt": 1652591000976,
+      "name": "Set trang điểm LACO make up colection 3 món",
+      "categoryId": 5,
+      "minPrice": 120000,
+      "maxPrice": 123,
+      "createdAt": 1671852197774,
+      "updatedAt": 1671852197774,
+      "isDeleted": false,
       "id": 6
+    },
+    {
+      "name": "Mỹ phẩm thiên nhiên laco",
+      "categoryId": 5,
+      "minPrice": 120000,
+      "maxPrice": 150000,
+      "createdAt": 1671852231173,
+      "updatedAt": 1671852231173,
+      "isDeleted": false,
+      "id": 7
+    },
+    {
+      "name": "Sữa tắm men rượu Sake - Mỹ phẩm organic Laco",
+      "categoryId": 5,
+      "minPrice": 280000,
+      "maxPrice": 280000,
+      "createdAt": 1671852257353,
+      "updatedAt": 1671852257353,
+      "isDeleted": false,
+      "id": 8
+    },
+    {
+      "name": "Serum Mụn Thâm Trắng Da Giảm Nhờn Làm Mịn Da",
+      "categoryId": 6,
+      "minPrice": 95000,
+      "maxPrice": 195000,
+      "createdAt": 1671852331202,
+      "updatedAt": 1671852331202,
+      "isDeleted": false,
+      "id": 9
+    },
+    {
+      "name": "Serum Trắng Da Giữ Ẩm Chống Nắng Se Khít Lỗ Chân Lông",
+      "categoryId": 6,
+      "minPrice": 200000,
+      "maxPrice": 200000,
+      "createdAt": 1671852355602,
+      "updatedAt": 1673281124341,
+      "isDeleted": false,
+      "id": 10,
+      "price": 200000
+    },
+    {
+      "name": "Kích trắng Đông Anh / X6 / Kone Việt",
+      "minPrice": 200000,
+      "maxPrice": 250000,
+      "categoryId": 4,
+      "createdAt": 1672661680258,
+      "updatedAt": 1672661680259,
+      "isDeleted": false,
+      "id": 11
+    },
+    {
+      "name": "Kích trắng Đông Anh / X6 / Kone Việt",
+      "minPrice": 100000,
+      "maxPrice": 200000,
+      "categoryId": 4,
+      "createdAt": 1672674019195,
+      "updatedAt": 1673279590535,
+      "isDeleted": false,
+      "id": 12,
+      "optionGroups": [
+        {
+          "id": 1,
+          "name": "Kích cỡ",
+          "items": [
+            {
+              "id": 1,
+              "name": "S",
+              "price": 100000
+            },
+            {
+              "id": 2,
+              "name": "M",
+              "price": 250000
+            },
+            {
+              "name": "L",
+              "price": 300000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SRM B",
+      "slug": "SRM-B",
+      "minPrice": 10000,
+      "maxPrice": 10000,
+      "categoryId": 9,
+      "createdAt": 1677406606896,
+      "updatedAt": 1677406606896,
+      "isDeleted": false,
+      "id": 15
+    },
+    {
+      "name": "SRM C",
+      "slug": "srm-c",
+      "minPrice": 30000,
+      "maxPrice": 30000,
+      "categoryId": 10,
+      "createdAt": 1677406951089,
+      "updatedAt": 1677406951090,
+      "isDeleted": false,
+      "id": 16
+    }
+  ],
+  "optionGroups": [
+    {
+      "name": "Kích cỡ",
+      "productId": 12,
+      "createdAt": 1672674019219,
+      "updatedAt": 1673279590560,
+      "isDeleted": false,
+      "id": 1
+    }
+  ],
+  "optionItems": [
+    {
+      "name": "S",
+      "price": 100000,
+      "optionGroupId": 1,
+      "productId": 12,
+      "createdAt": 1672674019233,
+      "updatedAt": 1673279590570,
+      "isDeleted": false,
+      "id": 1
+    },
+    {
+      "name": "M",
+      "price": 250000,
+      "optionGroupId": 1,
+      "productId": 12,
+      "createdAt": 1672674019244,
+      "updatedAt": 1673279590584,
+      "isDeleted": false,
+      "id": 2
+    },
+    {
+      "name": "L",
+      "price": 300000,
+      "optionGroupId": 1,
+      "productId": 12,
+      "createdAt": 1673279590595,
+      "updatedAt": 1673279590595,
+      "isDeleted": false,
+      "id": 3
+    }
+  ],
+  "reviews": [
+    {
+      "userId": 5,
+      "productId": 1,
+      "reviewContent": "asass",
+      "rate": 2,
+      "createdAt": 1671291612962,
+      "updatedAt": 1671291612963,
+      "isDeleted": false,
+      "id": 1
+    },
+    {
+      "userId": 5,
+      "productId": 1,
+      "reviewContent": "aaaa",
+      "rate": 3,
+      "createdAt": 1671292015800,
+      "updatedAt": 1671292015800,
+      "isDeleted": false,
+      "id": 2
+    },
+    {
+      "userId": 5,
+      "productId": 3,
+      "reviewContent": "123321",
+      "rate": 5,
+      "createdAt": 1671985674581,
+      "updatedAt": 1671985674581,
+      "isDeleted": false,
+      "id": 3
+    },
+    {
+      "userId": 5,
+      "productId": 3,
+      "reviewContent": "321123",
+      "rate": 3,
+      "createdAt": 1671985691157,
+      "updatedAt": 1671985691157,
+      "isDeleted": false,
+      "id": 4
+    },
+    {
+      "userId": 5,
+      "productId": 3,
+      "reviewContent": "Good",
+      "rate": 3,
+      "createdAt": 1672230036710,
+      "updatedAt": 1672230036711,
+      "isDeleted": false,
+      "id": 5
+    },
+    {
+      "userId": 5,
+      "productId": 3,
+      "reviewContent": "Bad",
+      "rate": 1,
+      "createdAt": 1672230633570,
+      "updatedAt": 1672230633570,
+      "isDeleted": false,
+      "id": 6
+    },
+    {
+      "userId": 5,
+      "productId": 3,
+      "reviewContent": "Very b",
+      "rate": 1,
+      "createdAt": 1672230656527,
+      "updatedAt": 1672230656527,
+      "isDeleted": false,
+      "id": 7
+    },
+    {
+      "userId": 5,
+      "productId": 3,
+      "reviewContent": "Bad",
+      "rate": 1,
+      "createdAt": 1672230667519,
+      "updatedAt": 1672230667519,
+      "isDeleted": false,
+      "id": 8
+    },
+    {
+      "userId": 5,
+      "productId": 12,
+      "reviewContent": "qwe",
+      "rate": 4,
+      "createdAt": 1677405111212,
+      "updatedAt": 1677405111212,
+      "isDeleted": false,
+      "id": 9
+    }
+  ],
+  "favorites": [
+    {
+      "productId": 3,
+      "userId": 5,
+      "createdAt": 1671984261301,
+      "updatedAt": 1671984261301,
+      "isDeleted": false,
+      "id": 3
     }
   ]
 }
