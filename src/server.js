@@ -16,6 +16,7 @@ server.use((req, res, next) => {
   if (req.method === 'POST') {
     req.body.createdAt = moment().valueOf();
     req.body.updatedAt = moment().valueOf();
+    req.body.isDeleted = false;
   }
 
   if (req.method === 'PUT') {

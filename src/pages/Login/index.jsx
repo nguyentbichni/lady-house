@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox } from 'antd';
 
 import { loginAction } from '../../redux/actions/';
+import { ROUTER } from '../../constants/routers';
 
 const LoginPage = () => {
   const [loginForm] = Form.useForm();
@@ -14,7 +15,7 @@ const LoginPage = () => {
   const { loginData } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (loginData.errors?.length) {
+    if (loginData.errors) {
       loginForm.setFields([
         {
           name: 'email',
@@ -22,7 +23,7 @@ const LoginPage = () => {
         },
         {
           name: 'password',
-          errors: ['Email or password is incorrect'],
+          errors: [loginData.errors],
         },
       ]);
     }
@@ -31,13 +32,8 @@ const LoginPage = () => {
   const handleLogin = (values) => {
     dispatch(
       loginAction({
-        data: {
-          email: values.email,
-          password: values.password,
-        },
-        callback: {
-          goToHome: () => navigate('/'),
-        },
+        data: values,
+        callback: (role) => (role === 'admin' ? navigate(ROUTER.ADMIN.PRODUCT_LIST) : navigate(ROUTER.USER.HOME)),
       })
     );
   };

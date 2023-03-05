@@ -1,64 +1,141 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button } from 'antd';
-
+import { Button, Form, Modal, Input, Rate, Space, Radio } from 'antd';
+import { HeartOutlined, PlusOutlined, MinusOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import {
   getProductDetailAction,
-  createCommentAction,
-  getCommentListAction,
-  deleteCommentAction,
+  createReviewAction,
+  getReviewListAction,
+  deleteReviewAction,
+  favoriteProductAction,
+  unfavoriteProductAction,
 } from '../../../redux/actions';
 
 const ProductDetailPage = () => {
-  const [commentForm, setCommentForm] = useState({ comment: '', rate: '' });
-
-  const { id } = useParams();
+  const [isShowReviewModal, setIsShowReviewModal] = useState(false);
+  const [optionValue, setOptionValue] = useState('');
+  const params = useParams();
+  const id = params.id?.split('.')[1];
+  const [createReviewForm] = Form.useForm();
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  const { productDetail } = useSelector((state) => state.product);
-  const { userInfo } = useSelector((state) => state.auth);
-  const { commentList } = useSelector((state) => state.comment);
+
+  const { TextArea } = Input;
 
   useEffect(() => {
     dispatch(getProductDetailAction({ id }));
-    dispatch(getCommentListAction({ productId: parseInt(id) }));
-  }, []);
+    dispatch(getReviewListAction({ productId: id }));
+  }, [id]);
 
-  const handleChangeComment = (e) => {
-    const { name, value } = e.target;
-    setCommentForm({ ...commentForm, [name]: value });
+  const { productDetail } = useSelector((state) => state.product);
+  const { reviewList } = useSelector((state) => state.review);
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const hasFavoriteData = productDetail.data.favorites?.find((favoriteItem) => {
+    return favoriteItem.userId === userInfo.data.id;
+  });
+
+  const handleToggleFavorite = () => {
+    if (hasFavoriteData) {
+      dispatch(
+        unfavoriteProductAction({
+          id: hasFavoriteData.id,
+          productId: productDetail.data.id,
+        })
+      );
+    } else {
+      dispatch(
+        favoriteProductAction({
+          data: {
+            productId: productDetail.data.id,
+            userId: userInfo.data.id,
+          },
+        })
+      );
+    }
   };
 
-  const handleSubmitComment = () => {
-    console.log(commentForm);
-    dispatch(createCommentAction({ productId: parseInt(id), userId: userInfo.data.id, ...commentForm }));
+  const handleAddCart = () => {
+    const cartList = JSON.parse(localStorage.getItem('cart'));
+    const existCartIndex = cartList.findIndex((item) => item.id === productDetail.data.id);
+    if (existCartIndex !== -1) {
+      const cartData = {
+        ...cartList[existCartIndex],
+        quantity: quantity + cartList[existCartIndex].quantity,
+      };
+      cartList.splice(existCartIndex, 1, cartData);
+    } else {
+      const cartData = {
+        id: productDetail.data.id,
+        name: productDetail.data.name,
+        price: productDetail.data.minPrice,
+        quantity: quantity,
+      };
+      cartList.push(cartData);
+    }
+    localStorage.setItem('cart', JSON.stringify(cartList));
   };
 
-  const handleDeleteComment = (commentId) => {
-    dispatch(deleteCommentAction({ id: commentId, productId: parseInt(id) }));
-  };
-
-  const renderProductDetail = () => {
-    if (productDetail.loading) return <div>Loading...</div>;
-    return (
-      <div key={productDetail.data.id}>
-        <h1>{productDetail.data.name}</h1>
-        <img src={productDetail.data.image} alt={productDetail.data.name} />
-        <p>{productDetail.data.description}</p>
-        <p>{productDetail.data.price}</p>
-      </div>
-    );
-  };
-
-  const renderCommentList = () => {
-    if (commentList.loading) return <div>Loading...</div>;
-    return commentList.data.map((item) => {
+  const renderPrice = () => {
+    if (optionValue) {
+      var item = productDetail.data.optionItems.find((item) => item.id === optionValue);
+      return <p>Price: {item.price}</p>;
+    } else {
       return (
-        <div key={item.id}>
-          <p>{item.user.name}</p>
-          <p>{item.comment}</p>
-          <p>{item.rate}</p>
-          {userInfo.data.id === item.user.id && <Button onClick={() => handleDeleteComment(item.id)}>Delete</Button>}
+        <p>
+          Price:
+          {productDetail.data.minPrice === productDetail.data.maxPrice
+            ? productDetail.data.minPrice
+            : `${productDetail.data.minPrice} - ${productDetail.data.maxPrice}`}
+        </p>
+      );
+    }
+  };
+
+  const renderAverageRating = () => {
+    let total = 0;
+    reviewList.data.forEach((item) => {
+      total = total + item.rate;
+    });
+    return reviewList.data.length ? (total / reviewList.data.length).toFixed(1) : 0;
+  };
+
+  const renderReviewList = useMemo(() => {
+    return reviewList.data.map((reviewItem) => {
+      return (
+        <div key={reviewItem.id}>
+          <p>Name: {reviewItem.user.name}</p>
+          <p>Content: {reviewItem.reviewContent}</p>
+          <div>
+            Rate: <Rate disabled value={reviewItem.rate} />
+          </div>
+          <p>Time: {moment(reviewItem.createdAt).fromNow()}</p>
+        </div>
+      );
+    });
+  }, [reviewList.data]);
+
+  const renderOptionsList = () => {
+    return productDetail.data.optionGroups?.map((group) => {
+      return (
+        <div key={group.id}>
+          <Space>
+            <p>{group.name}:</p>
+            <Radio.Group buttonStyle="solid" onChange={(e) => setOptionValue(e.target.value)}>
+              {productDetail.data.optionItems
+                ?.filter((item) => item.optionGroupId === group.id)
+                .map((item) => {
+                  // if (item.optionGroupId !== group.id) return null;
+                  return (
+                    <Radio.Button value={item.id} key={item.id}>
+                      {item.name}
+                    </Radio.Button>
+                  );
+                })}
+            </Radio.Group>
+          </Space>
         </div>
       );
     });
@@ -66,15 +143,61 @@ const ProductDetailPage = () => {
 
   return (
     <div>
-      {renderProductDetail()}
+      <h3>
+        <span>{productDetail.data.name}</span> - <span>{renderAverageRating()}</span>
+      </h3>
+      {renderPrice()}
+      {renderOptionsList()}
       {userInfo.data.id && (
-        <>
-          <input type="text" name="comment" onChange={(e) => handleChangeComment(e)} />
-          <input type="text" name="rate" onChange={(e) => handleChangeComment(e)} />
-          <Button onClick={() => handleSubmitComment()}>Submit</Button>
-        </>
+        <Button type="text" icon={<HeartOutlined />} danger={!!hasFavoriteData} onClick={() => handleToggleFavorite()}>
+          Like
+        </Button>
       )}
-      {renderCommentList()}
+      {`(${productDetail.data.favorites?.length} lượt thích)`}
+      <Input.Group compact>
+        <Button onClick={() => setQuantity(quantity - 1)} icon={<MinusOutlined />} />
+        <Input value={quantity} style={{ width: 100 }} />
+        <Button onClick={() => setQuantity(quantity + 1)} icon={<PlusOutlined />} />
+      </Input.Group>
+      <Button onClick={() => handleAddCart()} icon={<ShoppingCartOutlined />}>
+        Add to cart
+      </Button>
+      <br />
+      {userInfo.data.id && <Button onClick={() => setIsShowReviewModal(true)}>Review</Button>}
+      {renderReviewList}
+      <Modal
+        title="Review"
+        open={!!isShowReviewModal}
+        onOk={() => createReviewForm.submit()}
+        onCancel={() => setIsShowReviewModal(null)}
+      >
+        <Form
+          form={createReviewForm}
+          onFinish={(values) =>
+            dispatch(
+              createReviewAction({
+                data: {
+                  userId: userInfo.data.id,
+                  productId: productDetail.data.id,
+                  reviewContent: values.content,
+                  rate: values.rate,
+                },
+                callback: () => {
+                  setIsShowReviewModal(false);
+                  createReviewForm.resetFields();
+                },
+              })
+            )
+          }
+        >
+          <Form.Item name="content" rules={[{ required: true, message: 'Please input your review!' }]}>
+            <TextArea rows={4} placeholder="Input review" maxLength={6} />
+          </Form.Item>
+          <Form.Item name="rate" rules={[{ required: true, message: 'Please rating for product!' }]}>
+            <Rate />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

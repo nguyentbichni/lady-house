@@ -15,11 +15,11 @@ const RegisterPage = () => {
   const { registerData } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (registerData.errors?.length) {
+    if (registerData.errors) {
       registerForm.setFields([
         {
           name: 'email',
-          errors: registerData.errors,
+          errors: [registerData.errors],
         },
       ]);
     }
@@ -29,14 +29,12 @@ const RegisterPage = () => {
     dispatch(
       registerAction({
         data: {
-          email: values.email,
           name: values.name,
+          email: values.email,
           password: values.password,
           role: 'user',
         },
-        callback: {
-          goToLogin: () => navigate(ROUTER.LOGIN),
-        },
+        callback: () => navigate(ROUTER.LOGIN),
       })
     );
   };
