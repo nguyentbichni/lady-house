@@ -7,6 +7,7 @@ import categoryReducer from './redux/reducers/category.reducer';
 import reviewReducer from './redux/reducers/review.reducer';
 import favoriteReducer from './redux/reducers/favorite.reducer';
 import userReducer from './redux/reducers/user.reducer';
+import cartReducer from './redux/reducers/cart.reducer';
 
 import rootSaga from './redux/sagas';
 
@@ -20,6 +21,7 @@ const store = configureStore({
     review: reviewReducer,
     favorite: favoriteReducer,
     user: userReducer,
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({

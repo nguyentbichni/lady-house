@@ -11,6 +11,7 @@ import {
   deleteReviewAction,
   favoriteProductAction,
   unfavoriteProductAction,
+  addToCartAction,
 } from '../../../redux/actions';
 
 const ProductDetailPage = () => {
@@ -55,27 +56,6 @@ const ProductDetailPage = () => {
         })
       );
     }
-  };
-
-  const handleAddCart = () => {
-    const cartList = JSON.parse(localStorage.getItem('cart'));
-    const existCartIndex = cartList.findIndex((item) => item.id === productDetail.data.id);
-    if (existCartIndex !== -1) {
-      const cartData = {
-        ...cartList[existCartIndex],
-        quantity: quantity + cartList[existCartIndex].quantity,
-      };
-      cartList.splice(existCartIndex, 1, cartData);
-    } else {
-      const cartData = {
-        id: productDetail.data.id,
-        name: productDetail.data.name,
-        price: productDetail.data.minPrice,
-        quantity: quantity,
-      };
-      cartList.push(cartData);
-    }
-    localStorage.setItem('cart', JSON.stringify(cartList));
   };
 
   const renderPrice = () => {
@@ -159,7 +139,21 @@ const ProductDetailPage = () => {
         <Input value={quantity} style={{ width: 100 }} />
         <Button onClick={() => setQuantity(quantity + 1)} icon={<PlusOutlined />} />
       </Input.Group>
-      <Button onClick={() => handleAddCart()} icon={<ShoppingCartOutlined />}>
+      <Button
+        onClick={() =>
+          dispatch(
+            addToCartAction({
+              data: {
+                id: productDetail.data.id,
+                name: productDetail.data.name,
+                price: productDetail.data.minPrice,
+                quantity: quantity,
+              },
+            })
+          )
+        }
+        icon={<ShoppingCartOutlined />}
+      >
         Add to cart
       </Button>
       <br />

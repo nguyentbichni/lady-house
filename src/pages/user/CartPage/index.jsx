@@ -1,32 +1,24 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Row, Col, Card, Checkbox, Input, Select, Button, Modal, Space, Table, Pagination } from 'antd';
+import { Row, Col, Card, Checkbox, Input, Select, Button, Modal, Space, Table, Pagination, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, generatePath, Link, useParams } from 'react-router-dom';
 
 import { PAGINATION_LIMIT } from '../../../constants/pagination';
 import { ROUTER } from '../../../constants/routers';
-import { getProductListAction, deleteProductAction } from '../../../redux/actions';
+import { getProductListAction } from '../../../redux/actions';
 
 const CartPage = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getProductListAction({ limit: PAGINATION_LIMIT.ADMIN_TABLE, page: 1 }));
-  // }, []);
+  const { cartList } = useSelector((state) => state.cart);
+  console.log('🚀 ~ file: index.jsx:14 ~ CartPage ~ cartList:', cartList);
 
-  // const { productList } = useSelector((state) => state.product);
-
-  // const handleChangePage = (page) => {
-  //   dispatch(getProductListAction({ page, limit: PAGINATION_LIMIT.ADMIN_TABLE }));
-  // };
-
-  // const tableData = productList.data.map((item) => {
-  //   return {
-  //     ...item,
-  //     key: item.id,
-  //   };
-  // });
-
+  const tableData = cartList.map((item) => {
+    return {
+      ...item,
+      key: item.id,
+    };
+  });
   const columns = [
     {
       title: 'Name',
@@ -37,17 +29,19 @@ const CartPage = () => {
       title: 'Đơn giá',
       dataIndex: 'price',
       key: 'price',
-      render: (_, item) => (item.minPrice === item.maxPrice ? item.minPrice : `${item.minPrice} - ${item.maxPrice}`),
+      render: (price) => price.toLocaleString(),
     },
     {
       title: 'Số lượng',
       dataIndex: 'quantity',
       key: 'quantity',
+      render: (quantity) => <InputNumber min={1} value={quantity} onChange={(value) => console.log(value)} />,
     },
     {
       title: 'Thành tiền',
       dataIndex: 'totalPrice',
       key: 'totalPrice',
+      render: (_, item) => (item.price * item.quantity).toLocaleString(),
     },
     {
       title: 'Action',
@@ -64,7 +58,7 @@ const CartPage = () => {
   return (
     <div>
       CartPage
-      <Table columns={columns} dataSource={[]} pagination={false} />
+      <Table columns={columns} dataSource={tableData} pagination={false} />
     </div>
   );
 };

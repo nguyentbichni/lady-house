@@ -10,6 +10,7 @@ import { logoutAction } from '../../redux/actions';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
+  const { cartList } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -31,13 +32,12 @@ const Header = () => {
     }
     dispatch(logoutAction());
   };
-
-  const cartQuantity = JSON.parse(localStorage.getItem('cart')).length;
+  // const cartQuantity = JSON.parse(localStorage.getItem('cart')).length;
   return (
     <div>
       <div>Header</div>
       <div>
-        <Badge count={cartQuantity}>
+        <Badge count={cartList.length}>
           <ShoppingCartOutlined style={{ fontSize: 24 }} />
         </Badge>
       </div>
