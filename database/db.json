@@ -435,5 +435,29 @@
       "isDeleted": false,
       "id": 3
     }
+  ],
+  "discounts": [
+    {
+      "id": 1,
+      "name": "name",
+      "type": "percent",
+      "code": "HELLO",
+      "requiredPrice": 10000,
+      "value": 10,
+      "maxDiscount": 5000,
+      "startDate": 2,
+      "endDate": 5
+    },
+    {
+      "id": 2,
+      "name": "name",
+      "type": "cash",
+      "code": "HI",
+      "requiredPrice": 10000,
+      "value": 5000,
+      "maxDiscount": 5000,
+      "startDate": 2,
+      "endDate": 5
+    }
   ]
 }

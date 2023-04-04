@@ -6,3 +6,4 @@ export * from './review.constant';
 export * from './favorite.constant';
 export * from './user.constant';
 export * from './cart.constant';
+export * from './discount.constant';

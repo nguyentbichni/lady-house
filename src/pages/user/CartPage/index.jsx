@@ -5,18 +5,17 @@ import { useNavigate, generatePath, Link, useParams } from 'react-router-dom';
 
 import { PAGINATION_LIMIT } from '../../../constants/pagination';
 import { ROUTER } from '../../../constants/routers';
-import { getProductListAction } from '../../../redux/actions';
+import { updateCartAction, deleteCartAction } from '../../../redux/actions';
 
 const CartPage = () => {
   const dispatch = useDispatch();
 
   const { cartList } = useSelector((state) => state.cart);
-  console.log('🚀 ~ file: index.jsx:14 ~ CartPage ~ cartList:', cartList);
 
   const tableData = cartList.map((item) => {
     return {
       ...item,
-      key: item.id,
+      key: `${item.id}${item.option ? `-${item.option.id}` : ''}`,
     };
   });
   const columns = [
@@ -24,6 +23,13 @@ const CartPage = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      render: (_, item) => <Link to={generatePath(ROUTER.USER.PRODUCT_DETAIL, { id: `${item.slug}.${item.id}` })}>{item.name}</Link>,
+    },
+    {
+      title: 'Option',
+      dataIndex: 'option',
+      key: 'option',
+      render: (option) => option?.name,
     },
     {
       title: 'Đơn giá',
@@ -35,7 +41,13 @@ const CartPage = () => {
       title: 'Số lượng',
       dataIndex: 'quantity',
       key: 'quantity',
-      render: (quantity) => <InputNumber min={1} value={quantity} onChange={(value) => console.log(value)} />,
+      render: (_, item) => (
+        <InputNumber
+          min={1}
+          value={item.quantity}
+          onChange={(value) => dispatch(updateCartAction({ id: item.id, quantity: value }))}
+        />
+      ),
     },
     {
       title: 'Thành tiền',
@@ -48,17 +60,32 @@ const CartPage = () => {
       dataIndex: 'action',
       key: 'action',
       render: (_, item) => (
-        <Button type="primary" danger ghost onClick={() => null}>
+        <Button
+          type="primary"
+          danger
+          ghost
+          onClick={() => dispatch(deleteCartAction({ id: item.id, option: item.option }))}
+        >
           Delete
         </Button>
       ),
     },
   ];
 
+  const handleTotal = () => {
+    let total = 0;
+    cartList.forEach((item) => {
+      total = total + item.price * item.quantity;
+    });
+    // const a = cartList.map((item) => item.price * item.quantity).reduce((total, num) => total + num);
+    return <p>Tổng tiền: {total}</p>;
+  };
+
   return (
     <div>
       CartPage
       <Table columns={columns} dataSource={tableData} pagination={false} />
+      {handleTotal()}
     </div>
   );
 };

@@ -38,7 +38,7 @@ const Header = () => {
       <div>Header</div>
       <div>
         <Badge count={cartList.length}>
-          <ShoppingCartOutlined style={{ fontSize: 24 }} />
+          <ShoppingCartOutlined onClick={() => navigate(ROUTER.USER.CART)} style={{ fontSize: 24 }} />
         </Badge>
       </div>
       <div>

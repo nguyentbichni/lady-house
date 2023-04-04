@@ -45,6 +45,7 @@ function App() {
         <Route path={ROUTER.ADMIN.CREATE_CATEGORY} element={<P.AdminCreateCategoryPage />} />
         <Route path={ROUTER.ADMIN.UPDATE_CATEGORY} element={<P.AdminUpdateCategoryPage />} />
         <Route path={ROUTER.ADMIN.USER_LIST} element={<P.AdminUserListPage />} />
+        <Route path={ROUTER.ADMIN.DISCOUNT_LIST} element={<P.DiscountListPage />} />
       </Route>
     </Routes>
   );

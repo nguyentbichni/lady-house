@@ -17,13 +17,13 @@ import {
 const ProductDetailPage = () => {
   const [isShowReviewModal, setIsShowReviewModal] = useState(false);
   const [optionValue, setOptionValue] = useState('');
+  const [quantity, setQuantity] = useState(1);
+
   const params = useParams();
   const id = params.id?.split('.')[1];
-  const [createReviewForm] = Form.useForm();
-  const [quantity, setQuantity] = useState(1);
-  const dispatch = useDispatch();
 
-  const { TextArea } = Input;
+  const [createReviewForm] = Form.useForm();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProductDetailAction({ id }));
@@ -33,6 +33,7 @@ const ProductDetailPage = () => {
   const { productDetail } = useSelector((state) => state.product);
   const { reviewList } = useSelector((state) => state.review);
   const { userInfo } = useSelector((state) => state.auth);
+  const optionItems = productDetail.data.optionItems || [];
 
   const hasFavoriteData = productDetail.data.favorites?.find((favoriteItem) => {
     return favoriteItem.userId === userInfo.data.id;
@@ -58,9 +59,31 @@ const ProductDetailPage = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    if (optionItems.length && !optionValue) return alert('Chọn option');
+    const optionData = optionItems.find((item) => item.id === optionValue);
+    dispatch(
+      addToCartAction({
+        data: {
+          id: productDetail.data.id,
+          name: productDetail.data.name,
+          price: optionData ? optionData.price : productDetail.data.minPrice,
+          quantity: quantity,
+          slug: productDetail.data.slug,
+          option: optionData
+            ? {
+                id: optionValue,
+                name: optionData.name,
+              }
+            : null,
+        },
+      })
+    );
+  };
+
   const renderPrice = () => {
     if (optionValue) {
-      var item = productDetail.data.optionItems.find((item) => item.id === optionValue);
+      var item = optionItems.find((item) => item.id === optionValue);
       return <p>Price: {item.price}</p>;
     } else {
       return (
@@ -104,7 +127,7 @@ const ProductDetailPage = () => {
           <Space>
             <p>{group.name}:</p>
             <Radio.Group buttonStyle="solid" onChange={(e) => setOptionValue(e.target.value)}>
-              {productDetail.data.optionItems
+              {optionItems
                 ?.filter((item) => item.optionGroupId === group.id)
                 .map((item) => {
                   // if (item.optionGroupId !== group.id) return null;
@@ -139,21 +162,7 @@ const ProductDetailPage = () => {
         <Input value={quantity} style={{ width: 100 }} />
         <Button onClick={() => setQuantity(quantity + 1)} icon={<PlusOutlined />} />
       </Input.Group>
-      <Button
-        onClick={() =>
-          dispatch(
-            addToCartAction({
-              data: {
-                id: productDetail.data.id,
-                name: productDetail.data.name,
-                price: productDetail.data.minPrice,
-                quantity: quantity,
-              },
-            })
-          )
-        }
-        icon={<ShoppingCartOutlined />}
-      >
+      <Button onClick={() => handleAddToCart()} icon={<ShoppingCartOutlined />}>
         Add to cart
       </Button>
       <br />
@@ -185,7 +194,7 @@ const ProductDetailPage = () => {
           }
         >
           <Form.Item name="content" rules={[{ required: true, message: 'Please input your review!' }]}>
-            <TextArea rows={4} placeholder="Input review" maxLength={6} />
+            <Input.TextArea rows={4} placeholder="Input review" maxLength={6} />
           </Form.Item>
           <Form.Item name="rate" rules={[{ required: true, message: 'Please rating for product!' }]}>
             <Rate />

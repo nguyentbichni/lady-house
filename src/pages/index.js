@@ -13,6 +13,7 @@ import AdminCategoryListPage from '././admin/CategoryListPage';
 import AdminCreateCategoryPage from '././admin/CreateCategoryPage';
 import AdminUpdateCategoryPage from '././admin/UpdateCategoryPage';
 import AdminUserListPage from '././admin/UserListPage';
+import DiscountListPage from '././admin/DiscountListPage';
 
 const pages = {
   LoginPage,
@@ -30,6 +31,7 @@ const pages = {
   AdminCreateCategoryPage,
   AdminUpdateCategoryPage,
   AdminUserListPage,
+  DiscountListPage,
 };
 
 export default pages;
