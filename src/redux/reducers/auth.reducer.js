@@ -1,21 +1,25 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { AUTH_ACTION, REQUEST, SUCCESS, FAIL } from '../constants';
+import { createReducer } from '@reduxjs/toolkit'
+import { AUTH_ACTION, REQUEST, SUCCESS, FAIL } from '../constants'
 
 const initialState = {
   userInfo: {
     data: {},
     loading: true,
-    errors: null,
+    error: null,
   },
   registerData: {
     loading: false,
-    errors: null,
+    error: null,
   },
   loginData: {
     loading: false,
-    errors: null,
+    error: null,
   },
-};
+  changePasswordData: {
+    loading: false,
+    error: null,
+  },
+}
 
 const authReducer = createReducer(initialState, {
   [REQUEST(AUTH_ACTION.LOGIN)]: (state) => {
@@ -23,12 +27,12 @@ const authReducer = createReducer(initialState, {
       ...state,
       loginData: {
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(AUTH_ACTION.LOGIN)]: (state, action) => {
-    const { data } = action.payload;
+    const { data } = action.payload
     return {
       ...state,
       loginData: {
@@ -40,17 +44,17 @@ const authReducer = createReducer(initialState, {
         data,
         loading: false,
       },
-    };
+    }
   },
   [FAIL(AUTH_ACTION.LOGIN)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       loginData: {
         loading: false,
         errors,
       },
-    };
+    }
   },
 
   [REQUEST(AUTH_ACTION.REGISTER)]: (state) => {
@@ -58,9 +62,9 @@ const authReducer = createReducer(initialState, {
       ...state,
       registerData: {
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(AUTH_ACTION.REGISTER)]: (state, action) => {
     return {
@@ -69,17 +73,17 @@ const authReducer = createReducer(initialState, {
         ...state.registerData,
         loading: false,
       },
-    };
+    }
   },
   [FAIL(AUTH_ACTION.REGISTER)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       registerData: {
         loading: false,
         errors,
       },
-    };
+    }
   },
 
   [REQUEST(AUTH_ACTION.GET_USER_INFO)]: (state) => {
@@ -88,12 +92,12 @@ const authReducer = createReducer(initialState, {
       userInfo: {
         ...state.userInfo,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(AUTH_ACTION.GET_USER_INFO)]: (state, action) => {
-    const { data } = action.payload;
+    const { data } = action.payload
     return {
       ...state,
       userInfo: {
@@ -101,10 +105,10 @@ const authReducer = createReducer(initialState, {
         data,
         loading: false,
       },
-    };
+    }
   },
   [FAIL(AUTH_ACTION.GET_USER_INFO)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       userInfo: {
@@ -112,19 +116,48 @@ const authReducer = createReducer(initialState, {
         loading: false,
         errors,
       },
-    };
+    }
   },
   [REQUEST(AUTH_ACTION.LOGOUT)]: (state) => {
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem('accessToken')
     return {
       ...state,
       userInfo: {
         data: {},
         loading: false,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
-});
+  // change password
+  [REQUEST(AUTH_ACTION.CHANGE_PASSWORD)]: (state) => {
+    return {
+      ...state,
+      changePasswordData: {
+        loading: true,
+        error: null,
+      },
+    }
+  },
+  [SUCCESS(AUTH_ACTION.CHANGE_PASSWORD)]: (state, action) => {
+    return {
+      ...state,
+      changePasswordData: {
+        ...state.changePasswordData,
+        loading: false,
+      },
+    }
+  },
+  [FAIL(AUTH_ACTION.CHANGE_PASSWORD)]: (state, action) => {
+    const { errors } = action.payload
+    return {
+      ...state,
+      changePasswordData: {
+        loading: false,
+        errors,
+      },
+    }
+  },
+})
 
-export default authReducer;
+export default authReducer

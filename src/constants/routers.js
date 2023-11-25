@@ -4,6 +4,8 @@ export const ROUTER = {
     PRODUCT_LIST: '/products',
     PRODUCT_DETAIL: '/product/:id',
     CART: '/cart',
+    CHECKOUT: '/checkout',
+    PROFILE: '/profile',
   },
   ADMIN: {
     PRODUCT_LIST: '/admin/products',
@@ -21,4 +23,5 @@ export const ROUTER = {
   LOGIN: '/login',
   REGISTER: '/register',
   NOT_FOUND: '/404',
-};
+  STYLE_GUIDE: '/style-guide',
+}

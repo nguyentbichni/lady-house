@@ -1,13 +1,13 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { USER_ACTION, REQUEST, SUCCESS, FAIL } from '../constants';
+import { createReducer } from '@reduxjs/toolkit'
+import { USER_ACTION, REQUEST, SUCCESS, FAIL } from '../constants'
 
 const initialState = {
   userList: {
     data: [],
     loading: false,
-    errors: null,
+    error: null,
   },
-};
+}
 const userReducer = createReducer(initialState, {
   [REQUEST(USER_ACTION.GET_USER_LIST)]: (state) => {
     return {
@@ -15,23 +15,23 @@ const userReducer = createReducer(initialState, {
       userList: {
         ...state.userList,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(USER_ACTION.GET_USER_LIST)]: (state, action) => {
-    const { data } = action.payload;
+    const { data } = action.payload
     return {
       ...state,
       userList: {
         data,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [FAIL(USER_ACTION.GET_USER_LIST)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       userList: {
@@ -39,7 +39,7 @@ const userReducer = createReducer(initialState, {
         loading: false,
         errors,
       },
-    };
+    }
   },
-});
-export default userReducer;
+})
+export default userReducer

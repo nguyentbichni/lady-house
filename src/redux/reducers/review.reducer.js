@@ -1,21 +1,21 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { REVIEW_ACTION, REQUEST, SUCCESS, FAIL } from '../constants';
+import { createReducer } from '@reduxjs/toolkit'
+import { REVIEW_ACTION, REQUEST, SUCCESS, FAIL } from '../constants'
 
 const initialState = {
   reviewList: {
     data: [],
     loading: false,
-    errors: null,
+    error: null,
   },
   createReviewData: {
     loading: false,
-    errors: null,
+    error: null,
   },
   deleteReviewData: {
     loading: false,
-    errors: null,
+    error: null,
   },
-};
+}
 const reviewReducer = createReducer(initialState, {
   [REQUEST(REVIEW_ACTION.GET_REVIEW_LIST)]: (state) => {
     return {
@@ -23,12 +23,12 @@ const reviewReducer = createReducer(initialState, {
       reviewList: {
         ...state.reviewList,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(REVIEW_ACTION.GET_REVIEW_LIST)]: (state, action) => {
-    const { data } = action.payload;
+    const { data } = action.payload
     return {
       ...state,
       reviewList: {
@@ -36,10 +36,10 @@ const reviewReducer = createReducer(initialState, {
         loading: true,
         error: null,
       },
-    };
+    }
   },
   [FAIL(REVIEW_ACTION.GET_REVIEW_LIST)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       reviewList: {
@@ -47,7 +47,7 @@ const reviewReducer = createReducer(initialState, {
         loading: false,
         errors,
       },
-    };
+    }
   },
 
   [REQUEST(REVIEW_ACTION.CREATE_REVIEW)]: (state) => {
@@ -55,9 +55,9 @@ const reviewReducer = createReducer(initialState, {
       ...state,
       createReviewData: {
         loading: true,
-        errors: false,
+        error: false,
       },
-    };
+    }
   },
   [SUCCESS(REVIEW_ACTION.CREATE_REVIEW)]: (state, action) => {
     return {
@@ -66,34 +66,34 @@ const reviewReducer = createReducer(initialState, {
         ...state.createReviewData,
         loading: false,
       },
-    };
+    }
   },
   [FAIL(REVIEW_ACTION.CREATE_REVIEW)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       createReviewData: {
         loading: false,
         errors,
       },
-    };
+    }
   },
 
   [REQUEST(REVIEW_ACTION.DELETE_REVIEW)]: (state) => {
     return {
       ...state,
-    };
+    }
   },
   [SUCCESS(REVIEW_ACTION.DELETE_REVIEW)]: (state, action) => {
     return {
       ...state,
-    };
+    }
   },
   [FAIL(REVIEW_ACTION.DELETE_REVIEW)]: (state, action) => {
     return {
       ...state,
-    };
+    }
   },
-});
+})
 
-export default reviewReducer;
+export default reviewReducer

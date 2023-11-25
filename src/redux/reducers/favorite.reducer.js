@@ -1,21 +1,21 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { FAVORITE_ACTION, REQUEST, SUCCESS, FAIL } from '../constants';
+import { createReducer } from '@reduxjs/toolkit'
+import { FAVORITE_ACTION, REQUEST, SUCCESS, FAIL } from '../constants'
 
 const initialState = {
   favoriteList: {
     data: [],
     loading: false,
-    errors: null,
+    error: null,
   },
   favoriteProductData: {
     loading: false,
-    errors: null,
+    error: null,
   },
   unfavoriteProductData: {
     loading: false,
-    errors: null,
+    error: null,
   },
-};
+}
 
 const favoriteReducer = createReducer(initialState, {
   [REQUEST(FAVORITE_ACTION.GET_FAVORITE_LIST)]: (state) => {
@@ -24,12 +24,12 @@ const favoriteReducer = createReducer(initialState, {
       favoriteList: {
         ...state.favoriteList,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(FAVORITE_ACTION.GET_FAVORITE_LIST)]: (state, action) => {
-    const { data } = action.payload;
+    const { data } = action.payload
     return {
       ...state,
       favoriteList: {
@@ -37,10 +37,10 @@ const favoriteReducer = createReducer(initialState, {
         loading: true,
         error: null,
       },
-    };
+    }
   },
   [FAIL(FAVORITE_ACTION.GET_FAVORITE_LIST)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       favoriteList: {
@@ -48,7 +48,7 @@ const favoriteReducer = createReducer(initialState, {
         loading: false,
         errors,
       },
-    };
+    }
   },
 
   [REQUEST(FAVORITE_ACTION.FAVORITE_PRODUCT)]: (state) => {
@@ -56,9 +56,9 @@ const favoriteReducer = createReducer(initialState, {
       ...state,
       favoriteProductData: {
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(FAVORITE_ACTION.FAVORITE_PRODUCT)]: (state, action) => {
     return {
@@ -67,17 +67,17 @@ const favoriteReducer = createReducer(initialState, {
         ...state.favoriteProductData,
         loading: false,
       },
-    };
+    }
   },
   [FAIL(FAVORITE_ACTION.FAVORITE_PRODUCT)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       favoriteProductData: {
         loading: false,
         errors,
       },
-    };
+    }
   },
 
   [REQUEST(FAVORITE_ACTION.UNFAVORITE_PRODUCT)]: (state) => {
@@ -85,9 +85,9 @@ const favoriteReducer = createReducer(initialState, {
       ...state,
       unfavoriteProductData: {
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(FAVORITE_ACTION.UNFAVORITE_PRODUCT)]: (state, action) => {
     return {
@@ -96,18 +96,18 @@ const favoriteReducer = createReducer(initialState, {
         ...state.unfavoriteProductData,
         loading: false,
       },
-    };
+    }
   },
   [FAIL(FAVORITE_ACTION.UNFAVORITE_PRODUCT)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       unfavoriteProductData: {
         loading: false,
         errors,
       },
-    };
+    }
   },
-});
+})
 
-export default favoriteReducer;
+export default favoriteReducer

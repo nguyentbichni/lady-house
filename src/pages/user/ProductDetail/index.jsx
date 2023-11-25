@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button, Form, Modal, Input, Rate, Space, Radio } from 'antd';
-import { HeartOutlined, PlusOutlined, MinusOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import React, { useEffect, useState, useMemo } from 'react'
+import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { Button, Form, Modal, Input, Rate, Space, Radio } from 'antd'
+import { HeartOutlined, PlusOutlined, MinusOutlined, ShoppingCartOutlined } from '@ant-design/icons'
+import moment from 'moment'
 import {
   getProductDetailAction,
   createReviewAction,
@@ -12,32 +12,32 @@ import {
   favoriteProductAction,
   unfavoriteProductAction,
   addToCartAction,
-} from '../../../redux/actions';
+} from '../../../redux/actions'
 
 const ProductDetailPage = () => {
-  const [isShowReviewModal, setIsShowReviewModal] = useState(false);
-  const [optionValue, setOptionValue] = useState('');
-  const [quantity, setQuantity] = useState(1);
+  const [isShowReviewModal, setIsShowReviewModal] = useState(false)
+  const [optionValue, setOptionValue] = useState('')
+  const [quantity, setQuantity] = useState(1)
 
-  const params = useParams();
-  const id = params.id?.split('.')[1];
+  const params = useParams()
+  const id = params.id?.split('.')[1]
 
-  const [createReviewForm] = Form.useForm();
-  const dispatch = useDispatch();
+  const [createReviewForm] = Form.useForm()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getProductDetailAction({ id }));
-    dispatch(getReviewListAction({ productId: id }));
-  }, [id]);
+    dispatch(getProductDetailAction({ id }))
+    dispatch(getReviewListAction({ productId: id }))
+  }, [id])
 
-  const { productDetail } = useSelector((state) => state.product);
-  const { reviewList } = useSelector((state) => state.review);
-  const { userInfo } = useSelector((state) => state.auth);
-  const optionItems = productDetail.data.optionItems || [];
+  const { productDetail } = useSelector((state) => state.product)
+  const { reviewList } = useSelector((state) => state.review)
+  const { userInfo } = useSelector((state) => state.auth)
+  const optionItems = productDetail.data.optionItems || []
 
   const hasFavoriteData = productDetail.data.favorites?.find((favoriteItem) => {
-    return favoriteItem.userId === userInfo.data.id;
-  });
+    return favoriteItem.userId === userInfo.data.id
+  })
 
   const handleToggleFavorite = () => {
     if (hasFavoriteData) {
@@ -46,7 +46,7 @@ const ProductDetailPage = () => {
           id: hasFavoriteData.id,
           productId: productDetail.data.id,
         })
-      );
+      )
     } else {
       dispatch(
         favoriteProductAction({
@@ -55,17 +55,17 @@ const ProductDetailPage = () => {
             userId: userInfo.data.id,
           },
         })
-      );
+      )
     }
-  };
+  }
 
   const handleAddToCart = () => {
-    if (optionItems.length && !optionValue) return alert('Chọn option');
-    const optionData = optionItems.find((item) => item.id === optionValue);
+    if (optionItems.length && !optionValue) return alert('Chọn option')
+    const optionData = optionItems.find((item) => item.id === optionValue)
     dispatch(
       addToCartAction({
         data: {
-          id: productDetail.data.id,
+          productId: productDetail.data.id,
           name: productDetail.data.name,
           price: optionData ? optionData.price : productDetail.data.minPrice,
           quantity: quantity,
@@ -78,13 +78,13 @@ const ProductDetailPage = () => {
             : null,
         },
       })
-    );
-  };
+    )
+  }
 
   const renderPrice = () => {
     if (optionValue) {
-      var item = optionItems.find((item) => item.id === optionValue);
-      return <p>Price: {item.price}</p>;
+      var item = optionItems.find((item) => item.id === optionValue)
+      return <p>Price: {item.price}</p>
     } else {
       return (
         <p>
@@ -93,17 +93,17 @@ const ProductDetailPage = () => {
             ? productDetail.data.minPrice
             : `${productDetail.data.minPrice} - ${productDetail.data.maxPrice}`}
         </p>
-      );
+      )
     }
-  };
+  }
 
   const renderAverageRating = () => {
-    let total = 0;
+    let total = 0
     reviewList.data.forEach((item) => {
-      total = total + item.rate;
-    });
-    return reviewList.data.length ? (total / reviewList.data.length).toFixed(1) : 0;
-  };
+      total = total + item.rate
+    })
+    return reviewList.data.length ? (total / reviewList.data.length).toFixed(1) : 0
+  }
 
   const renderReviewList = useMemo(() => {
     return reviewList.data.map((reviewItem) => {
@@ -116,9 +116,9 @@ const ProductDetailPage = () => {
           </div>
           <p>Time: {moment(reviewItem.createdAt).fromNow()}</p>
         </div>
-      );
-    });
-  }, [reviewList.data]);
+      )
+    })
+  }, [reviewList.data])
 
   const renderOptionsList = () => {
     return productDetail.data.optionGroups?.map((group) => {
@@ -135,14 +135,14 @@ const ProductDetailPage = () => {
                     <Radio.Button value={item.id} key={item.id}>
                       {item.name}
                     </Radio.Button>
-                  );
+                  )
                 })}
             </Radio.Group>
           </Space>
         </div>
-      );
-    });
-  };
+      )
+    })
+  }
 
   return (
     <div>
@@ -186,8 +186,8 @@ const ProductDetailPage = () => {
                   rate: values.rate,
                 },
                 callback: () => {
-                  setIsShowReviewModal(false);
-                  createReviewForm.resetFields();
+                  setIsShowReviewModal(false)
+                  createReviewForm.resetFields()
                 },
               })
             )
@@ -202,7 +202,7 @@ const ProductDetailPage = () => {
         </Form>
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-export default ProductDetailPage;
+export default ProductDetailPage

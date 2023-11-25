@@ -1,18 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
+import { configureStore } from '@reduxjs/toolkit'
+import createSagaMiddleware from 'redux-saga'
 
-import authReducer from './redux/reducers/auth.reducer';
-import productReducer from './redux/reducers/product.reducer';
-import categoryReducer from './redux/reducers/category.reducer';
-import reviewReducer from './redux/reducers/review.reducer';
-import favoriteReducer from './redux/reducers/favorite.reducer';
-import userReducer from './redux/reducers/user.reducer';
-import cartReducer from './redux/reducers/cart.reducer';
-import discountReducer from './redux/reducers/discount.reducer';
+import authReducer from './redux/reducers/auth.reducer'
+import productReducer from './redux/reducers/product.reducer'
+import categoryReducer from './redux/reducers/category.reducer'
+import reviewReducer from './redux/reducers/review.reducer'
+import favoriteReducer from './redux/reducers/favorite.reducer'
+import userReducer from './redux/reducers/user.reducer'
+import cartReducer from './redux/reducers/cart.reducer'
+import discountReducer from './redux/reducers/discount.reducer'
+import locationReducer from './redux/reducers/location.reducer'
+import orderReducer from './redux/reducers/order.reducer'
 
-import rootSaga from './redux/sagas';
+import rootSaga from './redux/sagas'
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware()
 
 const store = configureStore({
   reducer: {
@@ -24,6 +26,8 @@ const store = configureStore({
     user: userReducer,
     cart: cartReducer,
     discount: discountReducer,
+    location: locationReducer,
+    order: orderReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({
@@ -32,8 +36,8 @@ const store = configureStore({
     }),
     sagaMiddleware,
   ],
-});
+})
 
-sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga)
 
-export default store;
+export default store

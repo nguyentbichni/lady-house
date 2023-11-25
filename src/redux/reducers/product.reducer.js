@@ -1,27 +1,27 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { PRODUCT_ACTION, FAVORITE_ACTION, REQUEST, SUCCESS, FAIL } from '../constants';
+import { createReducer } from '@reduxjs/toolkit'
+import { PRODUCT_ACTION, FAVORITE_ACTION, REQUEST, SUCCESS, FAIL } from '../constants'
 
 const initialState = {
   productList: {
     data: [],
     meta: {},
     loading: false,
-    errors: null,
+    error: null,
   },
   productDetail: {
     data: {},
     loading: false,
-    errors: null,
+    error: null,
   },
   createProductData: {
     loading: false,
-    errors: null,
+    error: null,
   },
   updateProductData: {
     loading: false,
-    errors: null,
+    error: null,
   },
-};
+}
 const productReducer = createReducer(initialState, {
   [REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state) => {
     return {
@@ -29,24 +29,24 @@ const productReducer = createReducer(initialState, {
       productList: {
         ...state.productList,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
-    const { data, meta, isShowMore } = action.payload;
+    const { data, meta, isShowMore } = action.payload
     return {
       ...state,
       productList: {
         data: isShowMore ? [...state.productList.data, ...data] : data,
         meta,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       productList: {
@@ -54,7 +54,7 @@ const productReducer = createReducer(initialState, {
         loading: false,
         errors,
       },
-    };
+    }
   },
 
   [REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL)]: (state) => {
@@ -63,24 +63,24 @@ const productReducer = createReducer(initialState, {
       productDetail: {
         ...state.productDetail,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL)]: (state, action) => {
-    const { data } = action.payload;
+    const { data } = action.payload
     return {
       ...state,
       productDetail: {
         ...state.productDetail,
         data,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [FAIL(PRODUCT_ACTION.GET_PRODUCT_DETAIL)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       productDetail: {
@@ -88,7 +88,7 @@ const productReducer = createReducer(initialState, {
         loading: false,
         errors,
       },
-    };
+    }
   },
 
   [REQUEST(PRODUCT_ACTION.CREATE_PRODUCT)]: (state) => {
@@ -96,9 +96,9 @@ const productReducer = createReducer(initialState, {
       ...state,
       createProductData: {
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(PRODUCT_ACTION.CREATE_PRODUCT)]: (state, action) => {
     return {
@@ -107,17 +107,17 @@ const productReducer = createReducer(initialState, {
         ...state.createProductData,
         loading: false,
       },
-    };
+    }
   },
   [FAIL(PRODUCT_ACTION.CREATE_PRODUCT)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       createProductData: {
         loading: false,
         errors,
       },
-    };
+    }
   },
   // UPDATE_PRODUCT
   [REQUEST(PRODUCT_ACTION.UPDATE_PRODUCT)]: (state) => {
@@ -125,9 +125,9 @@ const productReducer = createReducer(initialState, {
       ...state,
       updateProductData: {
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(PRODUCT_ACTION.UPDATE_PRODUCT)]: (state, action) => {
     return {
@@ -136,21 +136,21 @@ const productReducer = createReducer(initialState, {
         ...state.updateProductData,
         loading: false,
       },
-    };
+    }
   },
   [FAIL(PRODUCT_ACTION.UPDATE_PRODUCT)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       updateProductData: {
         loading: false,
         errors,
       },
-    };
+    }
   },
   // FAVORITE_PRODUCT
   [SUCCESS(FAVORITE_ACTION.FAVORITE_PRODUCT)]: (state, action) => {
-    const { data } = action.payload;
+    const { data } = action.payload
     // const newFavorites = [...state.productDetail.data.favorites];
     // newFavorites.push(data);
     return {
@@ -163,14 +163,14 @@ const productReducer = createReducer(initialState, {
           favorites: [...state.productDetail.data.favorites, data],
         },
       },
-    };
+    }
   },
   // UNFAVORITE_PRODUCT
   [SUCCESS(FAVORITE_ACTION.UNFAVORITE_PRODUCT)]: (state, action) => {
-    const { id } = action.payload;
-    console.log('🚀 ~ file: product.reducer.js:171 ~ [SUCCESS ~ id', id);
-    const newFavorites = state.productDetail.data.favorites?.filter((item) => item.id !== id);
-    console.log('🚀 ~ file: product.reducer.js:172 ~ [SUCCESS ~ newFavorites', newFavorites);
+    const { id } = action.payload
+    console.log('🚀 ~ file: product.reducer.js:171 ~ [SUCCESS ~ id', id)
+    const newFavorites = state.productDetail.data.favorites?.filter((item) => item.id !== id)
+    console.log('🚀 ~ file: product.reducer.js:172 ~ [SUCCESS ~ newFavorites', newFavorites)
     return {
       ...state,
       productDetail: {
@@ -180,8 +180,8 @@ const productReducer = createReducer(initialState, {
           favorites: newFavorites,
         },
       },
-    };
+    }
   },
-});
+})
 
-export default productReducer;
+export default productReducer

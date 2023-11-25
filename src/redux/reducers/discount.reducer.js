@@ -1,13 +1,17 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { DISCOUNT_ACTION, REQUEST, SUCCESS, FAIL } from '../constants';
+import { createReducer } from '@reduxjs/toolkit'
+import { DISCOUNT_ACTION, REQUEST, SUCCESS, FAIL } from '../constants'
 
 const initialState = {
   discountList: {
     data: [],
     loading: false,
-    errors: null,
+    error: null,
   },
-};
+  createDiscountData: {
+    loading: false,
+    error: null,
+  },
+}
 const discountReducer = createReducer(initialState, {
   [REQUEST(DISCOUNT_ACTION.GET_DISCOUNT_LIST)]: (state) => {
     return {
@@ -15,23 +19,23 @@ const discountReducer = createReducer(initialState, {
       discountList: {
         ...state.discountList,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [SUCCESS(DISCOUNT_ACTION.GET_DISCOUNT_LIST)]: (state, action) => {
-    const { data } = action.payload;
+    const { data } = action.payload
     return {
       ...state,
       discountList: {
         data,
         loading: true,
-        errors: null,
+        error: null,
       },
-    };
+    }
   },
   [FAIL(DISCOUNT_ACTION.GET_DISCOUNT_LIST)]: (state, action) => {
-    const { errors } = action.payload;
+    const { errors } = action.payload
     return {
       ...state,
       discountList: {
@@ -39,7 +43,35 @@ const discountReducer = createReducer(initialState, {
         loading: false,
         errors,
       },
-    };
+    }
   },
-});
-export default discountReducer;
+  [REQUEST(DISCOUNT_ACTION.CREATE_DISCOUNT)]: (state) => {
+    return {
+      ...state,
+      createDiscountData: {
+        loading: true,
+        error: null,
+      },
+    }
+  },
+  [SUCCESS(DISCOUNT_ACTION.CREATE_DISCOUNT)]: (state, action) => {
+    return {
+      ...state,
+      createDiscountData: {
+        ...state.createDiscountData,
+        loading: false,
+      },
+    }
+  },
+  [FAIL(DISCOUNT_ACTION.CREATE_DISCOUNT)]: (state, action) => {
+    const { errors } = action.payload
+    return {
+      ...state,
+      createDiscountData: {
+        loading: false,
+        errors,
+      },
+    }
+  },
+})
+export default discountReducer

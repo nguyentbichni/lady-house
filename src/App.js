@@ -1,29 +1,28 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { Routes, Route } from 'react-router-dom'
+import jwtDecode from 'jwt-decode'
 
-import './App.css';
-import { ROUTER } from './constants/routers';
-import PublicLayout from './layouts/PublicLayout';
-import LoginLayout from './layouts/LoginLayout';
-import AdminLayout from './layouts/AdminLayout';
+import { ROUTER } from './constants/routers'
+import PublicLayout from './layouts/PublicLayout'
+import LoginLayout from './layouts/LoginLayout'
+import AdminLayout from './layouts/AdminLayout'
 
-import { getUserInfoAction } from './redux/actions';
-import P from './pages';
+import { getUserInfoAction } from './redux/actions'
+import P from './pages'
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    const cartData = localStorage.getItem('cart');
+    const token = localStorage.getItem('accessToken')
+    const cartData = localStorage.getItem('cart')
     if (token) {
-      const decoded = jwtDecode(token);
-      dispatch(getUserInfoAction({ id: decoded.sub }));
+      const decoded = jwtDecode(token)
+      dispatch(getUserInfoAction({ id: decoded.sub }))
     }
-    if (!cartData) localStorage.setItem('cart', JSON.stringify([]));
-  }, []);
+    if (!cartData) localStorage.setItem('cart', JSON.stringify([]))
+  }, [])
 
   return (
     <Routes>
@@ -32,6 +31,8 @@ function App() {
         <Route path={ROUTER.USER.PRODUCT_LIST} element={<P.ProductListPage />} />
         <Route path={ROUTER.USER.PRODUCT_DETAIL} element={<P.ProductDetailPage />} />
         <Route path={ROUTER.USER.CART} element={<P.CartPage />} />
+        <Route path={ROUTER.USER.CHECKOUT} element={<P.CheckoutPage />} />
+        <Route path={ROUTER.USER.PROFILE} element={<P.ProfilePage />} />
       </Route>
       <Route element={<LoginLayout />}>
         <Route path={ROUTER.LOGIN} element={<P.LoginPage />} />
@@ -46,9 +47,11 @@ function App() {
         <Route path={ROUTER.ADMIN.UPDATE_CATEGORY} element={<P.AdminUpdateCategoryPage />} />
         <Route path={ROUTER.ADMIN.USER_LIST} element={<P.AdminUserListPage />} />
         <Route path={ROUTER.ADMIN.DISCOUNT_LIST} element={<P.DiscountListPage />} />
+        <Route path={ROUTER.ADMIN.CREATE_DISCOUNT} element={<P.CreateDiscountPage />} />
       </Route>
+      <Route path={ROUTER.STYLE_GUIDE} element={<P.StyleGuidePage />} />
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, generatePath, Link, useParams } from 'react-router-dom';
 
 import { ROUTER } from '../../../constants/routers';
-import { getDiscountListAction } from '../../../redux/actions';
+import { getDiscountListAction, deleteDiscountAction } from '../../../redux/actions';
 
 const DiscountListPage = () => {
   const [deleteModalData, setDeleteModalData] = useState(null);
@@ -103,7 +103,14 @@ const DiscountListPage = () => {
         title="Delete"
         open={!!deleteModalData}
         onCancel={() => setDeleteModalData(null)}
-        onOk={() => console.log('delete')}
+        onOk={() =>
+          dispatch(
+            deleteDiscountAction({
+              id: deleteModalData.id,
+              callback: () => setDeleteModalData(null),
+            })
+          )
+        }
         okText="Yes"
         cancelText="No"
       >
